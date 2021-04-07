@@ -15,7 +15,7 @@ install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	mkdir -p $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens
 	for hayden in haydens/*; do \
-	install -m 0644 "$$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens/"$hayden"; \
+	install -m 0644 "$$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens/"$$hayden"; \
 	done
 	install -m 0755 haydenfetch $(DESTDIR)$(PREFIX)/bin/haydenfetch
 	@echo "You may need to install jq, jp2a, and neofetch"
@@ -35,10 +35,10 @@ debroot: control
 	mkdir -p debroot/DEBIAN
 	mkdir -p debroot/usr/bin
 	mkdir -p debroot/usr/share/doc/haydenfetch
+	mkdir -p debroot/usr/share/haydenfetch
 	cp -r haydens debroot/usr/share/haydenfetch
 	cp control debroot/DEBIAN/control
 	cp LICENSE debroot/usr/share/doc/haydenfetch/copyright
-	cp haydenfetch debroot/usr/bin/haydenfetch
 deb-pkg: options debroot
 	dpkg-deb -b "debroot" "haydenfetch_$(VERSION)_all.deb"
 

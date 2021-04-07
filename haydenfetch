@@ -36,19 +36,20 @@ done
 # search for haydens
 if [ "$hayden_directory" != "" ]; then
 	true
-elif [ -d "./haydens" ]; then # in source tree
+elif [ -d "./haydens" ]; then
 	hayden_directory="$(pwd)/haydens"
-elif [ -d "/usr/share/haydenfetch/haydens" ]; then # installed via dpkg
-	hayden_directory="/usr/share/haydenfetch/haydens"
-elif [ -d "/usr/local/share/haydenfetch/haydens" ]; then # locally installed
-	hayden_directory="/usr/local/share/haydenfetch/haydens"
+elif [ -d "$script_location/haydens" ]; then
+	hayden_directory="$script_location/haydens"
+elif [ -d "$script_location/../share/haydenfetch/haydens" ]; then
+	hayden_directory="$script_location/../share/haydenfetch/haydens"
 fi
-
+[ "$DEBUG" = "true" ] && echo "Found hayden directory in $hayden_directory."
 if [ "$hayden_directory" = "" ]; then
 	echo "error: no hayden directory found. Try passing --haydendir <directory> to $(basename $0)."
 	exit 1
 fi
-selected_hayden=$(ls -- "$hayden_directory/"*.{png,jpg,jpeg,PNG,JPEG,JPG} 2> /dev/null| shuf -n 1)
+selected_hayden=$(ls -- "$hayden_directory/"* | shuf -n 1)
+[ "$DEBUG" = "true" ] && echo "Selected Hayden $selected_hayden."
 if [ "$selected_hayden" = "" ]; then
 	echo "error: no haydens found in $hayden_directory"
 	exit 2
