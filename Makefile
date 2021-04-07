@@ -5,7 +5,7 @@ VERSION := $(word 1, $(VERSION))
 PREFIX  ?= /usr
 
 all:
-	@echo "Nekofetch doesn't need to be compiled, run 'make install' to install"
+	@echo "Haydenfetch doesn't need to be compiled, run 'make install' to install"
 
 debs: options iosdeb amd64deb
 
@@ -18,12 +18,15 @@ options:
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	install -m 0755 nekofetch $(DESTDIR)$(PREFIX)/bin/nekofetch
+        mkdir -p $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens
+        for hayden in haydens/*; do
+        install -m 0644 "$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens/"$hayden"
+	install -m 0755 haydenfetch $(DESTDIR)$(PREFIX)/bin/haydenfetch
 	@echo "You may need to install jq, jp2a, and neofetch"
 	@echo "imagemagick is also required to use the kitty image backend"
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/nekofetch
+	rm -f $(DESTDIR)$(PREFIX)/bin/haydenfetch
 
 ioscontrol:
 	cp control.template ioscontrol
