@@ -18,9 +18,10 @@ options:
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-        mkdir -p $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens
-        for hayden in haydens/*; do
-        install -m 0644 "$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens/"$hayden"
+	mkdir -p $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens
+	for hayden in haydens/*; do \
+	install -m 0644 "$$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens/"$hayden"; \
+	done
 	install -m 0755 haydenfetch $(DESTDIR)$(PREFIX)/bin/haydenfetch
 	@echo "You may need to install jq, jp2a, and neofetch"
 	@echo "imagemagick is also required to use the kitty image backend"
