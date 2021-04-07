@@ -1,3 +1,4 @@
+
 VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
 VERSION += 0-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
@@ -6,12 +7,6 @@ PREFIX  ?= /usr
 
 all:
 	@echo "Haydenfetch doesn't need to be compiled, run 'make install' to install"
-
-debs: options iosdeb amd64deb
-
-debroots: options iosdebroot amd64debroot
-
-controls: options ioscontrol amd64control
 
 options:
 	@echo "VERSION: $(VERSION)"
@@ -28,41 +23,28 @@ install:
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/haydenfetch
+	rm -rf $(DESTDIR)$(PREFIX)/share/haydenfetch
 
-ioscontrol:
-	cp control.template ioscontrol
-	sed -i 's/PACKAGE/com.propr.nekofetch/' ioscontrol
-	sed -i 's/ARCH/iphoneos-arm/' ioscontrol
-	sed -i 's/VERSION/$(VERSION)/' ioscontrol
-amd64control:
-	cp control.template amd64control
-	sed -i 's/PACKAGE/nekofetch/' amd64control
-	sed -i 's/ARCH/amd64/' amd64control
-	sed -i 's/VERSION/$(VERSION)/' amd64control
+control:
+	cp control.template control
+	sed -i 's/PACKAGE/haydenfetch/' control
+	sed -i 's/ARCH/all/' control
+	sed -i 's/VERSION/$(VERSION)/' control
 
-iosdebroot: ioscontrol
-	mkdir -p iosdebroot/DEBIAN
-	mkdir -p iosdebroot/usr/bin
-	mkdir -p iosdebroot/usr/share/doc/nekofetch
-	cp ioscontrol iosdebroot/DEBIAN/control
-	cp LICENSE iosdebroot/usr/share/doc/nekofetch/copyright
-	cp nekofetch iosdebroot/usr/bin/nekofetch
-amd64debroot: amd64control
-	mkdir -p amd64debroot/DEBIAN
-	mkdir -p amd64debroot/usr/bin
-	mkdir -p amd64debroot/usr/share/doc/nekofetch
-	cp amd64control amd64debroot/DEBIAN/control
-	cp LICENSE amd64debroot/usr/share/doc/nekofetch/copyright
-	cp nekofetch amd64debroot/usr/bin/nekofetch
-
-iosdeb: iosdebroot
-	dpkg-deb -b "iosdebroot" "com.propr.nekofetch_$(VERSION)_iphoneos-arm.deb"
-amd64deb: amd64debroot
-	dpkg-deb -b "amd64debroot" "nekofetch_$(VERSION)_amd64.deb"
+debroot: control
+	mkdir -p debroot/DEBIAN
+	mkdir -p debroot/usr/bin
+	mkdir -p debroot/usr/share/doc/haydenfetch
+	cp -r haydens debroot/usr/share/haydenfetch
+	cp control debroot/DEBIAN/control
+	cp LICENSE debroot/usr/share/doc/haydenfetch/copyright
+	cp haydenfetch debroot/usr/bin/haydenfetch
+deb-pkg: options debroot
+	dpkg-deb -b "debroot" "haydenfetch_$(VERSION)_all.deb"
 
 clean:
-	rm -rf iosdebroot amd64debroot
-	rm -f ioscontrol amd64control
-	rm -f com.propr.nekofetch_*_iphoneos-arm.deb nekofetch_*_amd64.deb
+	rm -rf debroot
+	rm -f control
+	rm -f haydenfetch_*_all.deb
 
-.PHONY: all debs debroots controls options install uninstall iosdeb amd64deb clean
+.PHONY: all debroot control option install uninstall deb-pkg clean

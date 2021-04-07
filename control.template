@@ -1,7 +1,7 @@
 Package: PACKAGE
 Architecture: ARCH
 Version: VERSION
-Depends: curl, jq, jp2a, neofetch
+Depends: jp2a, neofetch
 Recommends: imagemagick
-Description: neofetch but with nekos
-Maintainer: bbaovanc <bbaovanc@bbaovanc.com>
+Description: neofetch but with haydens
+Maintainer: Nick Chan <towinchenmi@gmail.com>
