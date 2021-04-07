@@ -1,2 +1,2 @@
-# nekofetch
-neofetch but with nekos
+# haydenfetch
+neofetch but with haydens

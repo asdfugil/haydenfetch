@@ -1,7 +1,8 @@
 Package: PACKAGE
 Architecture: ARCH
 Version: VERSION
-Depends: jp2a, neofetch
+Depends: jp2a, coreutils, neofetch
 Suggests: imagemagick
 Description: neofetch but with haydens
 Maintainer: Nick Chan <towinchenmi@gmail.com>
+Author: Nick Chan <towinchenmi@gmail.com>
