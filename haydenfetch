@@ -3,7 +3,7 @@
 tmpfile="$(mktemp)"
 use_height=""
 hayden_directory=""
-script_location=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+script_location=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
 while :; do
 	case "$1" in
 	"--w3m" | "w3m" | "--img" | "img" | "-i" | "i")
@@ -60,10 +60,7 @@ else
 	height="$(($(stty size | awk '{print $1}') - 5))"
 fi
 
-if [ "$kitty_imagemagick_warn" = "true" ]; then
-	jp2a --height="$height" "$selected_hayden" >"$tmpfile"
-	neofetch --source "$tmpfile"
-elif [ "$LC_TERMINAL" = "iTerm2" ]; then
+if [ "$LC_TERMINAL" = "iTerm2" ]; then
 	neofetch --iterm2 "$selected_hayden"
 elif [ "$use_w3m" = "true" ]; then
 	neofetch --w3m "$selected_hayden"
@@ -73,6 +70,3 @@ else
 fi
 
 rm "$tmpfile"
-if [ "$kitty_imagemagick_warn" = "true" ]; then
-	echo "WARN: imagemagick is required for kitty image backend"
-fi
