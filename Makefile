@@ -36,9 +36,11 @@ debroot: control
 	mkdir -p debroot/usr/bin
 	mkdir -p debroot/usr/share/doc/haydenfetch
 	mkdir -p debroot/usr/share/haydenfetch
+
 	cp -r haydens debroot/usr/share/haydenfetch
 	cp control debroot/DEBIAN/control
 	cp LICENSE debroot/usr/share/doc/haydenfetch/copyright
+	cp haydenfetch debroot/usr/bin/haydenfetch
 deb-pkg: options debroot
 	dpkg-deb -b "debroot" "haydenfetch_$(VERSION)_all.deb"
 
