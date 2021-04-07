@@ -49,7 +49,7 @@ if [ "$hayden_directory" = "" ]; then
 	exit 1
 fi
 selected_hayden=$(ls -- "$hayden_directory/"* | shuf -n 1)
-[ "$DEBUG" = "true" ] && echo "Selected Hayden $selected_hayden."
+[ "$DEBUG" = "true" ] && echo "Selected Hayden image at $selected_hayden."
 if [ "$selected_hayden" = "" ]; then
 	echo "error: no haydens found in $hayden_directory"
 	exit 2
