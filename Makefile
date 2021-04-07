@@ -14,6 +14,8 @@ options:
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	mkdir -p $(DESTDIR)$(PREFIX)/share/haydenfetch/haydens
+	mkdir -p $(DESTDIR)$(PREFIX)/share/doc/haydenfetch
+	install -m 0644 LICENSE $(DESTDIR)$(PREFIX)/share/doc/haydenfetch/copyright
 	for hayden in haydens/*; do \
 	install -m 0644 "$$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/"$$hayden"; \
 	done
