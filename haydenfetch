@@ -45,10 +45,10 @@ elif [ -d "$script_location/../share/haydenfetch/haydens" ]; then
 fi
 [ "$DEBUG" = "true" ] && echo "Found hayden directory in $hayden_directory."
 if [ "$hayden_directory" = "" ]; then
-	echo "error: no hayden directory found. Try passing --haydendir <directory> to $(basename $0)."
+	echo "error: no hayden directory found. Try passing --haydendir <directory>."
 	exit 1
 fi
-selected_hayden=$(ls -- "$hayden_directory/"* | shuf -n 1)
+selected_hayden=$(find "$hayden_directory" -name "*.jpg" | shuf -n 1)
 [ "$DEBUG" = "true" ] && echo "Selected Hayden image at $selected_hayden."
 if [ "$selected_hayden" = "" ]; then
 	echo "error: no haydens found in $hayden_directory"
