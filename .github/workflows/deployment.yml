@@ -27,19 +27,9 @@ jobs:
         draft: true
         prerelease: false
 
-    - name: Build debs
-      run: make debs
+    - name: Build package
+      run: make deb-pkg
 
-    - name: Upload iphoneos-arm asset
-      id: upload-iphoneos-arm-asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
-        asset_name: com.propr.nekofetch_${{ steps.version.outputs.VERSION }}_iphoneos-arm.deb
-        asset_content_type: application/vnd.debian.binary-package
     - name: Upload amd64 asset
       id: upload-amd64-asset
       uses: actions/upload-release-asset@v1
@@ -47,6 +37,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
-        asset_name: nekofetch_${{ steps.version.outputs.VERSION }}_amd64.deb
+        asset_path: ./haydenfetch_${{ steps.version.outputs.VERSION }}_amd64.deb
+        asset_name: haydenfetch_${{ steps.version.outputs.VERSION }}_amd64.deb
         asset_content_type: application/vnd.debian.binary-package
