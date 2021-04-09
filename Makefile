@@ -3,7 +3,7 @@ VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
 VERSION += 1.1-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
 
-PREFIX  ?= /usr
+PREFIX  ?= /usr/local
 
 all:
 	@echo "Haydenfetch doesn't need to be compiled, run 'make install' to install"
@@ -20,8 +20,7 @@ install:
 	install -m 0644 "$$hayden" $(DESTDIR)$(PREFIX)/share/haydenfetch/"$$hayden"; \
 	done
 	install -m 0755 haydenfetch $(DESTDIR)$(PREFIX)/bin/haydenfetch
-	@echo "You may need to install jq, jp2a, and neofetch"
-	@echo "imagemagick is also required to use the kitty image backend"
+	@echo "You may need to install jp2a and findutils"
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/haydenfetch
