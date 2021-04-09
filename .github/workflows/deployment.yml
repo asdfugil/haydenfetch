@@ -30,8 +30,8 @@ jobs:
     - name: Build package
       run: make deb-pkg
 
-    - name: Upload amd64 asset
-      id: upload-amd64-asset
+    - name: Upload asset
+      id: upload-asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
