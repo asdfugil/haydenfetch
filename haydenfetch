@@ -6,6 +6,17 @@ hayden_directory=""
 script_location=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
 while :; do
 	case "$1" in
+	"--help")
+		cat << EOF
+Haydenfetch is a CLI system information tool in POSIX sh. It calls neofetch (which needs bash) with an image of hayden.
+
+OPTIONS:
+i, -i, img, --img, w3m, --w3m	Use the w3m image backend for neofetch
+-h, --height <height>		Display hayden image of height <height>
+--haydendir <directory>		Make haydenfetch search for haydens in <directory>
+EOF
+	exit 0
+	;;
 	"--w3m" | "w3m" | "--img" | "img" | "-i" | "i")
 		[ "$DEBUG" = "true" ] && echo "Using w3m image backend for neofetch"
 		use_w3m="true"
@@ -22,7 +33,6 @@ while :; do
 		hayden_directory="$2"
 		shift
 		;;
-
 	*)
 		if [ -z "$1" ]; then
 			break
@@ -59,14 +69,16 @@ if [ "$use_height" != "" ]; then
 else
 	height="$(($(stty size | awk '{print $1}') - 5))"
 fi
-
+# execute neofetch
+# shebang is not respected on some jailbreaks
+# we use -c option because there might be a file named 'neofetch' in .
 if [ "$LC_TERMINAL" = "iTerm2" ]; then
-	neofetch --iterm2 "$selected_hayden"
+	bash -c 'neofetch --iterm2 '"$selected_hayden"
 elif [ "$use_w3m" = "true" ]; then
-	neofetch --w3m "$selected_hayden"
+	bash -c 'neofetch --w3m '"$selected_hayden"
 else
 	jp2a --height="$height" "$selected_hayden" >"$tmpfile"
-	neofetch --source "$tmpfile"
+	bash -c 'neofetch --source '"$tmpfile"
 fi
 
 rm "$tmpfile"
