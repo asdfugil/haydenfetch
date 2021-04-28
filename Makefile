@@ -1,6 +1,6 @@
 
 VERSION ?= $(shell git tag --points-at HEAD | sed 's/^v//')
-VERSION += 1.1-git-$(shell git rev-parse --short HEAD)
+VERSION += 1.1.1-git-$(shell git rev-parse --short HEAD)
 VERSION := $(word 1, $(VERSION))
 
 PREFIX  ?= /usr/local
