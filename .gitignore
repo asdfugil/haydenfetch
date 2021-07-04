@@ -1,3 +1,7 @@
-debroot/
-control
+alldebroot/
+darwin-amd64debroot/
+darwin-arm64debroot/
+allcontrol
+darwin-amd64control
+darwin-arm64control
 haydenfetch_*_*.deb

@@ -15,15 +15,21 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch:
+          - all
+          - darwin-amd64
+          - darwin-arm64
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Build deb
-      run: make deb-pkg
+      run: make ${{ matrix.arch }}deb
 
     - name: Upload deb as artifact
       uses: actions/upload-artifact@v2
       with:
-        name: haydenfetch.deb
-        path: haydenfetch_*_all.deb
+        name: ${{ matrix.arch }}-deb
+        path: "*haydenfetch*.deb"

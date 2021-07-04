@@ -28,10 +28,10 @@ jobs:
         prerelease: false
 
     - name: Build package
-      run: make deb-pkg
+      run: make deb-pkg -j3
 
-    - name: Upload asset
-      id: upload-asset
+    - name: Upload all asset
+      id: upload-all-asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,4 +39,26 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./haydenfetch_${{ steps.version.outputs.VERSION }}_all.deb
         asset_name: haydenfetch_${{ steps.version.outputs.VERSION }}_all.deb
+        asset_content_type: application/vnd.debian.binary-package
+
+    - name: Upload darwin-amd64 asset
+      id: upload-darwin-amd64-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}   
+        asset_path: ./haydenfetch_${{ steps.version.outputs.VERSION }}_darwin-amd64.deb
+        asset_name: haydenfetch_${{ steps.version.outputs.VERSION }}_darwin-amd64.deb
+        asset_content_type: application/vnd.debian.binary-package
+
+    - name: Upload darwin-arm64 asset
+      id: upload-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}   
+        asset_path: ./haydenfetch_${{ steps.version.outputs.VERSION }}_darwin-arm64.deb
+        asset_name: haydenfetch_${{ steps.version.outputs.VERSION }}_darwin-arm64.deb
         asset_content_type: application/vnd.debian.binary-package
