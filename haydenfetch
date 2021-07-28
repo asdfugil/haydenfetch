@@ -5,7 +5,7 @@ use_height=""
 hayden_directory=""
 script_location=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
 
-if ! command -v shuf; then
+if ! command -v shuf 2> /dev/null; then
 	shuf=gshuf;
 else
 	shuf=shuf;
