@@ -4,6 +4,13 @@ tmpfile="$(mktemp)"
 use_height=""
 hayden_directory=""
 script_location=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd -P)
+
+if ! command -v shuf; then
+	shuf=gshuf;
+else
+	shuf=shuf;
+fi
+
 while :; do
 	case "$1" in
 	"--w3m" | "w3m" | "--img" | "img" | "-i" | "i")
@@ -48,7 +55,7 @@ if [ "$hayden_directory" = "" ]; then
 	echo "error: no hayden directory found. Try passing --haydendir <directory>."
 	exit 1
 fi
-selected_hayden=$(find "$hayden_directory" -name "*.jpg" | shuf -n 1)
+selected_hayden=$(find "$hayden_directory" -name "*.jpg" | $shuf -n 1)
 [ "$DEBUG" = "true" ] && echo "Selected Hayden image at $selected_hayden."
 if [ "$selected_hayden" = "" ]; then
 	echo "error: no haydens found in $hayden_directory"
